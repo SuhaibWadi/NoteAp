@@ -60,8 +60,6 @@ function NoteList({navigation, route}) {
     );
   }
 
-  
-
   return (
     <>
       <View style={styles.container}>
