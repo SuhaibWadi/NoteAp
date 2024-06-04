@@ -21,13 +21,13 @@ const AddNoteForm = ({navigation}) => {
     ),
   });
 
-  function textToTitle(text, title) {
+  const textToTitle = (text, title) => {
     if (title === '') {
       let noteTextBecomeNoteTitle = text.trim();
       return noteTextBecomeNoteTitle.split(' ')[0];
     }
     return title.trim();
-  }
+  };
 
   const handleAddNote = () => {
     dispatch(

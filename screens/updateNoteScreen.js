@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {TextInput, View, StyleSheet, Button} from 'react-native';
 import {updateNote} from '../redux/slice';
-export default function UpdatingNote({navigation, route}) {
+const UpdatingNoteScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
   const theId = route.params.id;
 
@@ -48,7 +48,8 @@ export default function UpdatingNote({navigation, route}) {
       <Button title="update Note" onPress={updateHandler} />
     </View>
   );
-}
+};
+export default UpdatingNoteScreen;
 
 const styles = StyleSheet.create({
   container: {

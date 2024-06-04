@@ -11,20 +11,18 @@ import {
 } from 'react-native';
 import RemixIcon from 'react-native-remix-icon';
 import {deleteNote} from '../redux/slice';
-
-function NoteList({navigation, route}) {
+import CreateNewNoteButton from '../components/CreateNewNoteButton';
+const NoteList = ({navigation, route}) => {
   const notes = useSelector(state => state.notes.items);
   const dispatch = useDispatch();
 
   const handleDeleteNote = id => {
-    console.log({id});
     Alert.alert(
       'Confirm Delete',
       'Are you sure you want to delete this item?',
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
           style: 'cancel',
         },
         {
@@ -37,7 +35,7 @@ function NoteList({navigation, route}) {
       ],
     );
   };
-  const handleCreateNewNote = id => {
+  const handleCreateNewNote = () => {
     navigation.navigate('Note');
   };
 
@@ -45,17 +43,18 @@ function NoteList({navigation, route}) {
     navigation.navigate('updateNote', {id});
   };
 
+  const renderThreeDot = item =>
+    item.length > 8 ? item.slice(0, 8) + '…' : item;
+
   if (notes.length === 0) {
     return (
       <View style={styles.noteForUserContainer}>
         <View>
-          <Text style={styles.noteForUser}>no note please add</Text>
+          <Text style={styles.noteForUser}>
+            No note added please add a note
+          </Text>
         </View>
-        <View style={styles.addNoteUser}>
-          <TouchableOpacity onPress={() => handleCreateNewNote()}>
-            <RemixIcon name="add-circle-fill" size={70} color="#427dde" />
-          </TouchableOpacity>
-        </View>
+        <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
       </View>
     );
   }
@@ -75,15 +74,11 @@ function NoteList({navigation, route}) {
                   <View style={styles.circle} />
 
                   <Text numberOfLines={1} style={styles.noteTitle}>
-                    {item.title.length > 8
-                      ? item.title.slice(0, 8) + '…'
-                      : item.title}
+                    {renderThreeDot(item.title)}
                   </Text>
                 </View>
                 <Text style={styles.text} numberOfLines={1}>
-                  {item?.text?.length > 8
-                    ? item.text.slice(0, 8) + '…'
-                    : item?.text}
+                  {renderThreeDot(item.text)}
                 </Text>
                 <View style={styles.deleteIcon}>
                   <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
@@ -94,15 +89,11 @@ function NoteList({navigation, route}) {
             </Pressable>
           )}
         />
-        <View style={styles.addNote}>
-          <TouchableOpacity onPress={() => handleCreateNewNote()}>
-            <RemixIcon name="add-circle-fill" size={70} color="#427dde" />
-          </TouchableOpacity>
-        </View>
+        <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
       </View>
     </>
   );
-}
+};
 
 export default NoteList;
 
@@ -160,19 +151,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignItems: 'center',
   },
-  line: {
-    flex: 1,
-    height: 2,
-    backgroundColor: 'gray',
-    marginBottom: 15,
-  },
-  addNote: {
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    bottom: 0,
-    paddingRight: 50,
-    paddingBottom: 50,
-  },
   noteForUser: {
     fontSize: 20,
     fontFamily: 'Cochin',
@@ -180,14 +158,6 @@ const styles = StyleSheet.create({
   noteForUserContainer: {
     flex: 1,
     justifyContent: 'center',
-
     alignItems: 'center',
-  },
-  addNoteUser: {
-    alignSelf: 'flex-end',
-    position: 'absolute',
-    bottom: 0,
-    paddingRight: 50,
-    paddingBottom: 50,
   },
 });
