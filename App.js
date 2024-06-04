@@ -1,8 +1,7 @@
 import React from 'react';
-// import {SafeAreaView, Text, View} from 'react-native';
 import {Provider} from 'react-redux';
 import store from './redux/store';
-import UpdatingNote from './screens/updateNoteScreen';
+import UpdatingNote from './screens/UpdateNoteScreen';
 import AddNoteForm from './screens/Note';
 import NoteList from './screens/NoteList';
 import {NavigationContainer} from '@react-navigation/native';
@@ -14,14 +13,12 @@ const App = () => {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator  screenOptions={{
-          headerShown: true, // Hide the header
-          // contentStyle:{red}
-          // headerTintColor:"gray",
-          
-        }}>
-          <Stack.Screen name="Note" component={AddNoteForm} />
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: true,
+          }}>
           <Stack.Screen name="NoteList" component={NoteList} />
+          <Stack.Screen name="Note" component={AddNoteForm} />
           <Stack.Screen name="updateNote" component={UpdatingNote} />
         </Stack.Navigator>
       </NavigationContainer>

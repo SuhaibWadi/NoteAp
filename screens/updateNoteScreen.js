@@ -1,36 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {Text, TextInput, View, StyleSheet, Button} from 'react-native';
-import {idk} from '../redux/slice';
+import {TextInput, View, StyleSheet, Button} from 'react-native';
+import {updateNote} from '../redux/slice';
 export default function UpdatingNote({navigation, route}) {
-  dispatch = useDispatch();
+  const dispatch = useDispatch();
   const theId = route.params.id;
-  console.log('the id', theId);
-  //   const notesText = useSelector(state => state.notes.items[0].text);
+
   const notes = useSelector(state => state.notes.items);
-  console.log(notes);
   const noteObject = notes.find(item => item.id === theId);
   const noteText = noteObject.text;
+  const noteTitle = noteObject.title;
 
-  // console.log('is it', noteObject);
   const [textUpdate, setTextUpdate] = useState(noteText);
-  const [titleUpdate, setTitleUpdate] = useState(noteText);
+  const [titleUpdate, setTitleUpdate] = useState(noteTitle);
 
+  function textToTitle(text, title) {
+    if (title === '') {
+      let noteTextBecomeNoteTitle = text.trim();
+      return noteTextBecomeNoteTitle.split(' ')[0];
+    }
+    return title.trim();
+  }
   function updateHandler() {
     const noteIndex = notes.indexOf(noteObject);
-    const updatedNoteObject = {
+    const newNoteData = {
       ...notes[noteIndex],
-      text: textUpdate,
-      title: titleUpdate,
+      text: textUpdate.trim(),
+      title: textToTitle(textUpdate, titleUpdate),
     };
-    const updatedNoteData = [
-      ...notes.slice(0, noteIndex),
-      updatedNoteObject,
-      ...notes.slice(noteIndex + 1),
-    ];
-    //change the name => idk
-    dispatch(idk(updatedNoteData));
-    console.log('updated!!', noteIndex, updatedNoteData, notes);
+    dispatch(updateNote({noteIndex, newNoteData}));
     navigation.navigate('NoteList');
   }
   return (
@@ -38,8 +36,8 @@ export default function UpdatingNote({navigation, route}) {
       <TextInput
         value={titleUpdate}
         style={styles.title}
-        multiline
         onChange={e => setTitleUpdate(e.nativeEvent.text)}
+        maxLength={20}
       />
       <TextInput
         value={textUpdate}
@@ -58,15 +56,15 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingTop: 50,
   },
-
   text: {
-    color: 'white',
+    color: 'black',
     fontSize: 20,
     backgroundColor: '#9f9f9f',
     padding: 20,
     width: 350,
     height: 500,
     textAlignVertical: 'top', // this is just for andriod
+    borderRadius: 7,
   },
   title: {
     borderRadius: 7,
@@ -76,5 +74,6 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 350,
     height: 80,
+    marginBottom: 10,
   },
 });

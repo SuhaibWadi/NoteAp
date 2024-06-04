@@ -1,40 +1,41 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-
 import {
   FlatList,
   Pressable,
   Text,
   View,
   StyleSheet,
-  Button,
   TouchableOpacity,
-  SafeAreaView,
   Alert,
 } from 'react-native';
 import RemixIcon from 'react-native-remix-icon';
-import {deleteNote, updateNote} from '../redux/slice';
+import {deleteNote} from '../redux/slice';
 
 function NoteList({navigation, route}) {
   const notes = useSelector(state => state.notes.items);
   const dispatch = useDispatch();
 
-  // navigation.setOptions({
-  //   backgroundColor: 'black',
-  //   headerRight: () => (
-  //     <Button
-  //       title="go to note"
-  //       onPress={() => {
-  //         navigation.navigate('Note');
-  //       }}
-  //     />
-  //   ),
-  // });
-
   const handleDeleteNote = id => {
     console.log({id});
-    
-    dispatch(deleteNote(id));
+    Alert.alert(
+      'Confirm Delete',
+      'Are you sure you want to delete this item?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          onPress: () => {
+            dispatch(deleteNote(id));
+          },
+          style: 'destructive',
+        },
+      ],
+    );
   };
   const handleCreateNewNote = id => {
     navigation.navigate('Note');
@@ -44,14 +45,23 @@ function NoteList({navigation, route}) {
     navigation.navigate('updateNote', {id});
   };
 
-  // let threeDotNoteEnd =item.text.length > 8 ? item.text.slice(0, 8 - 1) + '…' : item.text;
-  // console.log("let three",threeDotNoteEnd)
+  if (notes.length === 0) {
+    return (
+      <View style={styles.noteForUserContainer}>
+        <View>
+          <Text style={styles.noteForUser}>no note please add</Text>
+        </View>
+        <View style={styles.addNoteUser}>
+          <TouchableOpacity onPress={() => handleCreateNewNote()}>
+            <RemixIcon name="add-circle-fill" size={70} color="#427dde" />
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <>
-      {/* <View style={styles.titleContainer}>
-          <Text style={styles.title}>My Notes</Text>
-        </View>
-        <View style={styles.line}></View> */}
       <View style={styles.container}>
         <FlatList
           data={notes}
@@ -66,14 +76,14 @@ function NoteList({navigation, route}) {
 
                   <Text numberOfLines={1} style={styles.noteTitle}>
                     {item.title.length > 8
-                      ? item.title.slice(0, 8 - 1) + '…'
+                      ? item.title.slice(0, 8) + '…'
                       : item.title}
                   </Text>
                 </View>
                 <Text style={styles.text} numberOfLines={1}>
-                  {item.text.length > 8
-                    ? item.text.slice(0, 8 - 1) + '…'
-                    : item.text}
+                  {item?.text?.length > 8
+                    ? item.text.slice(0, 8) + '…'
+                    : item?.text}
                 </Text>
                 <View style={styles.deleteIcon}>
                   <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
@@ -101,7 +111,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#e6e6e6',
-    // maxHeight:650
   },
   noteContainer: {
     flex: 1,
@@ -116,15 +125,15 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontFamily: 'Cochin',
-    fontSize:15,
-    marginLeft:20
+    fontSize: 15,
+    marginLeft: 20,
   },
   noteTitle: {
     color: 'black',
     fontWeight: 'bold',
     fontFamily: 'Cochin',
     marginBottom: 10,
-    fontSize:20,
+    fontSize: 20,
   },
   circle: {
     width: 10,
@@ -132,7 +141,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#d1cbcb',
     marginRight: 5,
-    marginTop: 3,
+    marginTop: 6,
   },
   innerContainer: {
     flexDirection: 'row',
@@ -140,15 +149,12 @@ const styles = StyleSheet.create({
   deleteIcon: {
     alignSelf: 'flex-end',
     opacity: 0.5,
-    
-    // justifyContent:"flex-end",
   },
   title: {
     color: 'black',
     fontWeight: 'bold',
     fontFamily: 'Cochin',
     fontSize: 30,
-    
   },
   titleContainer: {
     marginBottom: 20,
@@ -161,13 +167,27 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   addNote: {
-    // position:"absolute",
-    alignSelf: "flex-end",
-    position:"absolute",
-    marginTop:650,
-    paddingRight:50
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
+    paddingRight: 50,
+    paddingBottom: 50,
+  },
+  noteForUser: {
+    fontSize: 20,
+    fontFamily: 'Cochin',
+  },
+  noteForUserContainer: {
+    flex: 1,
+    justifyContent: 'center',
 
-
-    // marginRight: 30,
+    alignItems: 'center',
+  },
+  addNoteUser: {
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 0,
+    paddingRight: 50,
+    paddingBottom: 50,
   },
 });
