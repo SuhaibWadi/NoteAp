@@ -1,4 +1,4 @@
-import {TextInput, Button, View, StyleSheet, ScrollView} from 'react-native';
+import {TextInput, Button, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addNote} from '../redux/slice';
@@ -66,8 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     paddingTop: 50,
-   
-    height: '100%',
   },
 
   text: {

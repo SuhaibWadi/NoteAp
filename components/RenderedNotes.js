@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Pressable,
   View,
@@ -39,13 +40,7 @@ const RenderedItem = ({
 export default RenderedItem;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#e6e6e6',
-  },
   noteContainer: {
-    flex: 1,
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'white',
@@ -90,15 +85,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     marginBottom: 20,
-    alignItems: 'center',
-  },
-  noteForUser: {
-    fontSize: 20,
-    fontFamily: 'Cochin',
-  },
-  noteForUserContainer: {
-    flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
 });
