@@ -36,30 +36,25 @@ const AddNoteForm = ({navigation}) => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.title}
-          value={noteTitle}
-          onChangeText={setNoteTitle}
-          multiline
-          placeholder="Title..."
-          maxLength={20}
-        />
-        <TextInput
-          style={styles.text}
-          value={noteText}
-          onChangeText={setNoteText}
-          multiline
-          placeholder="Start writing your Note Here ..."
-        />
+    <ScrollView style={styles.container}>
+      <TextInput
+        style={styles.title}
+        value={noteTitle}
+        onChangeText={setNoteTitle}
+        multiline
+        placeholder="Title..."
+        maxLength={20}
+      />
 
-        <Button
-          title="Add Note"
-          onPress={handleAddNote}
-          disabled={!isDisabled}
-        />
-      </View>
+      <TextInput
+        style={styles.text}
+        value={noteText}
+        onChangeText={setNoteText}
+        multiline
+        placeholder="Start writing your Note Here ..."
+      />
+
+      <Button title="Add Note" onPress={handleAddNote} disabled={!isDisabled} />
     </ScrollView>
   );
 };
@@ -71,6 +66,8 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     paddingTop: 50,
+   
+    height: '100%',
   },
 
   text: {
@@ -78,8 +75,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor: '#e6e6e6',
     padding: 20,
-    width: 350,
-    height: 500,
+    width: '100%',
+    height: '100%',
+    maxHeight: 600,
     textAlignVertical: 'top',
     borderRadius: 7,
   },
@@ -89,7 +87,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     backgroundColor: '#e6e6e6',
     padding: 20,
-    width: 350,
+    width: '100%',
     height: 80,
     marginBottom: 10,
   },

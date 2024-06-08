@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {TextInput, View, StyleSheet, Button} from 'react-native';
+import {TextInput, View, StyleSheet, Button, ScrollView} from 'react-native';
 import {updateNote} from '../redux/slice';
 const UpdatingNoteScreen = ({navigation, route}) => {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ const UpdatingNoteScreen = ({navigation, route}) => {
     navigation.navigate('NoteList');
   }
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <TextInput
         value={titleUpdate}
         style={styles.title}
@@ -47,7 +47,7 @@ const UpdatingNoteScreen = ({navigation, route}) => {
         onChange={e => setTextUpdate(e.nativeEvent.text)}
       />
       <Button title="update Note" onPress={updateHandler} />
-    </View>
+    </ScrollView>
   );
 };
 export default UpdatingNoteScreen;
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor: '#9f9f9f',
     padding: 20,
-    width: 350,
+    width: '100%',
     height: 500,
     textAlignVertical: 'top',
     borderRadius: 7,
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor: '#9f9f9f',
     padding: 20,
-    width: 350,
+    width: '100%',
     height: 80,
     marginBottom: 10,
   },
