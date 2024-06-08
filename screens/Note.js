@@ -2,7 +2,7 @@ import {TextInput, Button, View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addNote} from '../redux/slice';
-
+import NavigationOption from '../components/NavigationOption';
 const AddNoteForm = ({navigation}) => {
   const [noteText, setNoteText] = useState('');
   const [noteTitle, setNoteTitle] = useState('');
@@ -11,14 +11,7 @@ const AddNoteForm = ({navigation}) => {
   const dispatch = useDispatch();
 
   navigation.setOptions({
-    headerRight: () => (
-      <Button
-        title="cancel"
-        onPress={() => {
-          navigation.navigate('NoteList');
-        }}
-      />
-    ),
+    headerRight: () => <NavigationOption />,
   });
 
   const textToTitle = (text, title) => {
@@ -87,7 +80,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 350,
     height: 500,
-    textAlignVertical: 'top', // this is just for andriod
+    textAlignVertical: 'top',
     borderRadius: 7,
   },
   title: {

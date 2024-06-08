@@ -1,21 +1,13 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {
-  FlatList,
-  Pressable,
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
-import RemixIcon from 'react-native-remix-icon';
+import {FlatList, Text, View, StyleSheet, Alert} from 'react-native';
+
 import {deleteNote} from '../redux/slice';
 import CreateNewNoteButton from '../components/CreateNewNoteButton';
+import RenderedItem from '../components/RenderedNotes';
 const NoteList = ({navigation, route}) => {
   const notes = useSelector(state => state.notes.items);
   const dispatch = useDispatch();
-
   const handleDeleteNote = id => {
     Alert.alert(
       'Confirm Delete',
@@ -66,27 +58,12 @@ const NoteList = ({navigation, route}) => {
           data={notes}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
-            <Pressable
-              onPress={() => handleUpdate(item.id)}
-              onLongPress={() => handleDeleteNote(item.id)}>
-              <View style={styles.noteContainer}>
-                <View style={styles.innerContainer}>
-                  <View style={styles.circle} />
-
-                  <Text numberOfLines={1} style={styles.noteTitle}>
-                    {renderThreeDot(item.title)}
-                  </Text>
-                </View>
-                <Text style={styles.text} numberOfLines={1}>
-                  {renderThreeDot(item.text)}
-                </Text>
-                <View style={styles.deleteIcon}>
-                  <TouchableOpacity onPress={() => handleDeleteNote(item.id)}>
-                    <RemixIcon name="delete-bin-fill" size={20} color="black" />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </Pressable>
+            <RenderedItem
+              item={item}
+              renderThreeDot={renderThreeDot}
+              handleDeleteNote={handleDeleteNote}
+              handleUpdate={handleUpdate}
+            />
           )}
         />
         <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />

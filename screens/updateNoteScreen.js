@@ -8,9 +8,10 @@ const UpdatingNoteScreen = ({navigation, route}) => {
 
   const notes = useSelector(state => state.notes.items);
   const noteObject = notes.find(item => item.id === theId);
+  console.log(noteObject);
   const noteText = noteObject.text;
   const noteTitle = noteObject.title;
-
+  console.log(noteText);
   const [textUpdate, setTextUpdate] = useState(noteText);
   const [titleUpdate, setTitleUpdate] = useState(noteTitle);
 
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     padding: 20,
     width: 350,
     height: 500,
-    textAlignVertical: 'top', // this is just for andriod
+    textAlignVertical: 'top',
     borderRadius: 7,
   },
   title: {
