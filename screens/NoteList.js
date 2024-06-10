@@ -50,21 +50,21 @@ const NoteList = ({navigation, route}) => {
       </View>
     );
   }
-
+  const renderItem = ({item}) => (
+    <RenderedItem
+      item={item}
+      renderThreeDot={renderThreeDot}
+      handleDeleteNote={handleDeleteNote}
+      handleUpdate={handleUpdate}
+    />
+  );
   return (
     <>
       <View style={styles.container}>
         <FlatList
           data={notes}
           keyExtractor={item => item.id}
-          renderItem={({item}) => (
-            <RenderedItem
-              item={item}
-              renderThreeDot={renderThreeDot}
-              handleDeleteNote={handleDeleteNote}
-              handleUpdate={handleUpdate}
-            />
-          )}
+          renderItem={renderItem}
         />
         <CreateNewNoteButton handleCreateNewNote={handleCreateNewNote} />
       </View>

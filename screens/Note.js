@@ -1,4 +1,4 @@
-import {TextInput, Button, StyleSheet, ScrollView} from 'react-native';
+import {TextInput, Button, StyleSheet, ScrollView, View} from 'react-native';
 import React, {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {addNote} from '../redux/slice';
@@ -36,7 +36,7 @@ const AddNoteForm = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TextInput
         style={styles.title}
         value={noteTitle}
@@ -63,9 +63,9 @@ export default AddNoteForm;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 16,
     paddingTop: 50,
+    flex: 1,
   },
 
   text: {
@@ -73,9 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     backgroundColor: '#e6e6e6',
     padding: 20,
-    width: '100%',
-    height: '100%',
-    maxHeight: 600,
+    height: '80%',
     textAlignVertical: 'top',
     borderRadius: 7,
   },
@@ -86,7 +84,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#e6e6e6',
     padding: 20,
     width: '100%',
-    height: 80,
+    height: '8%',
     marginBottom: 10,
+  },
+  noteContainer: {
+    backgroundColor: 'black',
   },
 });

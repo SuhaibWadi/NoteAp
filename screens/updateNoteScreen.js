@@ -33,7 +33,7 @@ const UpdatingNoteScreen = ({navigation, route}) => {
     navigation.navigate('NoteList');
   }
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <TextInput
         value={titleUpdate}
         style={styles.title}
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#9f9f9f',
     padding: 20,
     width: '100%',
-    height: 500,
+    height: '80%',
     textAlignVertical: 'top',
     borderRadius: 7,
   },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#9f9f9f',
     padding: 20,
     width: '100%',
-    height: 80,
+    height: '8%',
     marginBottom: 10,
   },
 });
